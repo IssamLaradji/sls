@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5134c378-418c-4d28-942e-155698046003" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/example.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/2b7f4319fe31daa661f7e831b9550855/exp_dict.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/2b7f4319fe31daa661f7e831b9550855/history.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/CIFAR10-ResNet34-softmax.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/ded7fe7a05f009721b141ebb0bce2ca4/exp_dict.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/ded7fe7a05f009721b141ebb0bce2ca4/history.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sls/optim/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/sls/optim/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sls/optim/sgd_armijo.py" beforeDir="false" afterPath="$PROJECT_DIR$/sls/optim/sgd_armijo.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,11 +22,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sls/optim/sgd_armijo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="54" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="418">
+              <caret line="81" column="81" lean-forward="true" selection-start-line="81" selection-start-column="81" selection-end-line="81" selection-end-column="81" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -58,18 +46,18 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="33" selection-start-line="33" selection-end-line="42" />
+            <state relative-caret-position="166">
+              <caret line="68" column="15" lean-forward="true" selection-start-line="68" selection-start-column="15" selection-end-line="68" selection-end-column="15" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="210">
-                <caret line="19" column="52" lean-forward="true" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
+              <first_editor>
+                <caret column="26" selection-start-column="26" selection-end-column="26" />
               </first_editor>
               <second_editor />
             </state>
@@ -102,6 +90,8 @@
       <find>self.batch_size</find>
       <find>_prediction_params</find>
       <find>grad_norm</find>
+      <find>self.squeeze_output</find>
+      <find>self.output_size</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -119,9 +109,9 @@
         <option value="$PROJECT_DIR$/minimal_example.py" />
         <option value="$PROJECT_DIR$/sls/models/__init__.py" />
         <option value="$PROJECT_DIR$/sls/optim/__init__.py" />
-        <option value="$PROJECT_DIR$/sls/optim/sgd_armijo.py" />
         <option value="$PROJECT_DIR$/example.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/sls/optim/sgd_armijo.py" />
       </list>
     </option>
   </component>
@@ -347,7 +337,7 @@
       <workItem from="1563811940496" duration="8840000" />
       <workItem from="1563825862764" duration="81000" />
       <workItem from="1563825978596" duration="90000" />
-      <workItem from="1563826115432" duration="1394000" />
+      <workItem from="1563826115432" duration="3112000" />
     </task>
     <task id="LOCAL-00001" summary="added .gitignore">
       <created>1563415469304</created>
@@ -356,14 +346,35 @@
       <option name="project" value="LOCAL" />
       <updated>1563415469304</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="no model in constructor">
+      <created>1563827538724</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1563827538724</updated>
+    </task>
+    <task id="LOCAL-00003" summary="removed .idea">
+      <created>1563827662424</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1563827662424</updated>
+    </task>
+    <task id="LOCAL-00004" summary="removed .idea">
+      <created>1563828479036</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1563828479036</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11368000" />
+    <option name="totallyTimeSpent" value="13086000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1048" extended-state="6" />
+    <frame x="0" y="-16" width="1920" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.083778016" />
@@ -372,7 +383,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32908705" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.39915073" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.22929937" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -397,7 +408,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added .gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="added .gitignore" />
+    <MESSAGE value="no model in constructor" />
+    <MESSAGE value="removed .idea" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed .idea" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -457,30 +470,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sls/optim/sgd_armijo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="33" selection-start-line="33" selection-end-line="42" />
+        <state relative-caret-position="166">
+          <caret line="68" column="15" lean-forward="true" selection-start-line="68" selection-start-column="15" selection-end-line="68" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="210">
-            <caret line="19" column="52" lean-forward="true" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
+          <first_editor>
+            <caret column="26" selection-start-column="26" selection-end-column="26" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sls/optim/sgd_armijo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="81" column="81" lean-forward="true" selection-start-line="81" selection-start-column="81" selection-end-line="81" selection-end-column="81" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

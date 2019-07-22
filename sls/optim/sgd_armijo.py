@@ -79,12 +79,12 @@ class SGD_Armijo(torch.optim.Optimizer):
                     self.state['n_forwards'] += 1
 
                     wolfe_results = wolfe_line_search(step_size=step_size,
-                                                          step_size_old=step_size_old,
-                                                          loss=loss,
-                                                          grad_norm=grad_norm,
-                                                          loss_temp=loss_next,
-                                                          c=self.c,
-                                                          beta=self.beta)
+                                                      step_size_old=step_size_old,
+                                                      loss=loss,
+                                                      grad_norm=grad_norm,
+                                                      loss_temp=loss_next,
+                                                      c=self.c,
+                                                      beta=self.beta)
 
                     found, step_size, step_size_old = wolfe_results
 
@@ -99,7 +99,7 @@ class SGD_Armijo(torch.optim.Optimizer):
 
         # save the new step-size
         self.state['step_size'] = step_size
-        self.state['step'] = self.state['step'] + 1
+        self.state['step'] += 1
 
         return loss
 
