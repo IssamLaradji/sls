@@ -1,20 +1,20 @@
-## Stochastic Line Search [[paper]](https://arxiv.org/abs/1905.09997)
+## SGD_Armijo - Stochastic Line Search [[paper]](https://arxiv.org/abs/1905.09997)
 
 We propose the optimizer SGD_Armijo, a stochastic line-search method 
 that achieves superior generalization score and convergence speed.
 
-### 1. Running a minimal example with SGD_Armijo optimizer
-Run the following command,
+### 1. A minimal example
+Run the following command for illustrating the SGD_Armijo optimizer,
 ```
 python example.py
 ```
 
 It will train MLP with SGD_Armijo on MNIST for 5 epochs.
 
-### 2. Using the SGD_Armijo optimizer
-
-  1. copy  the folder`sls` into your project; then
-  2. define your optimizer something like,
+### 2. Using SGD_Armijo
+  1. clone repo `git clone git@github.com:IssamLaradji/sls.git`
+  2. copy  the folder`slc/sls` into your project; then
+  3. define your optimizer as something like,
   ```
   from sls import optim
   opt = optim.sgd_armijo.SGD_Armijo(model.parameters(),
@@ -23,7 +23,8 @@ It will train MLP with SGD_Armijo on MNIST for 5 epochs.
 
 ### 3. How is it different from other torch optimizers?
 
-1) SGD_Armijo needs the number of batches in an epoch as,
+1) SGD_Armijo needs the number of batches in an epoch. It can be obtained from
+`train_loader` like this,
     ```
     optim.sgd_armijo.SGD_Armijo(model.parameters(), n_batches_in_epoch=len(train_loader))
     ```
@@ -47,3 +48,5 @@ and return the loss without calling `loss.backward()`. Here is an example.
           
             return loss          
         ```
+
+
