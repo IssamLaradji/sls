@@ -25,7 +25,7 @@ def main():
     model = MLP(n_classes=10).cuda()
 
     # Run Optimizer
-    opt = optim.sgd_armijo.SGD_Armijo(model,
+    opt = optim.sgd_armijo.SGD_Armijo(model.parameters(),
                                       n_batches_in_epoch=len(train_loader))
 
     result_dict = []

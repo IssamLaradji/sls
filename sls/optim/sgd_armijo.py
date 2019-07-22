@@ -3,21 +3,20 @@ import copy
 
 from . import reset_step
 from . import wolfe_line_search
-from . import get_grads
 
 class SGD_Armijo(torch.optim.Optimizer):
     def __init__(self,
-                 model,
+                 params,
                  n_batches_in_epoch,
                  init_step_size=1,
                  c=0.1,
                  beta=0.9,
                  beta_2=None,
                  reset_option=1):
+        params = list(params)
+        super().__init__(params, {})
 
-        super().__init__(model.parameters(), {})
-
-        self.model = model
+        self.params = params
         self.c = c
         self.beta = beta
         self.init_step_size = init_step_size
@@ -44,7 +43,6 @@ class SGD_Armijo(torch.optim.Optimizer):
                                    init_step_size=self.init_step_size)
 
         # get loss and compute gradients
-        self.model.zero_grad()
         loss = closure()
         loss.backward()
 
@@ -53,10 +51,17 @@ class SGD_Armijo(torch.optim.Optimizer):
         self.state['n_backwards'] += 1
 
         # save the current parameters:
-        x_current = copy.deepcopy(self.param_groups)
+        params_current = copy.deepcopy(self.params)
+        grad_current = [p.grad for p in self.params]
 
+        grad_norm = 0.
+        for g in grad_current:
+            if g is None:
+                continue
+            grad_norm += torch.sum(torch.mul(g, g))
+        grad_norm = torch.sqrt(grad_norm)
         # save the gradient at the current parameters
-        grad_current, grad_norm = get_grads(self.model)
+        # grad_current, grad_norm = get_grads(self.params)
 
         # only do the check if the gradient norm is big enough
         with torch.no_grad():
@@ -67,7 +72,7 @@ class SGD_Armijo(torch.optim.Optimizer):
 
                 for e in range(100):
                     # try a prospective step
-                    self._try_update(step_size, x_current, grad_current)
+                    self._try_update(step_size, params_current, grad_current)
 
                     # compute the loss at the next step; no need to compute gradients.
                     loss_next = closure()
@@ -87,10 +92,10 @@ class SGD_Armijo(torch.optim.Optimizer):
                         break
 
                 if found == 0:
-                    self._try_update(1e-6, x_current, grad_current)
+                    self._try_update(1e-6, params_current, grad_current)
 
             else:
-                self._try_update(step_size, x_current, grad_current)
+                self._try_update(step_size, params_current, grad_current)
 
         # save the new step-size
         self.state['step_size'] = step_size
@@ -98,11 +103,10 @@ class SGD_Armijo(torch.optim.Optimizer):
 
         return loss
 
-    def _try_update(self, step_size, x_current, grad_current):
-        for i, group in enumerate(self.param_groups):
-            for j, p in enumerate(group['params']):
-                # update models parameters using SGD update
-                p.data = x_current[i]['params'][j] - \
-                         step_size * grad_current[i][j]
+    def _try_update(self, step_size, params_current, grad_current):
+        zipped = zip(self.params, params_current, grad_current)
+
+        for p_next, p_current, g_current in zipped:
+            p_next.data = p_current - step_size * g_current
 
 

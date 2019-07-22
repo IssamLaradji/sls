@@ -1,5 +1,0 @@
-batch_size: 128
-dataset: CIFAR10
-epochs: 200
-model: resnet34
-opt: SGD_Armijo

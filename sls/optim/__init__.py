@@ -36,8 +36,8 @@ def reset_step(step_size, n_batches, beta_2=None, reset_option=1,
 
     return step_size
 
-def get_grads(model):
-    param_groups = list(model.parameters())
+def get_grads(params):
+    param_groups = params
 
     grad_norm = 0
     gradient = []
