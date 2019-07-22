@@ -66,20 +66,16 @@ class MLP(nn.Module):
         super().__init__()
 
         self.input_size = input_size
-        self.output_size = n_classes
-        self.squeeze_output = False
-        self.act = F.relu
-
         self.hidden_layers = nn.ModuleList([nn.Linear(in_size, out_size, bias=bias) for
                                             in_size, out_size in zip([self.input_size] + hidden_sizes[:-1], hidden_sizes)])
-        self.output_layer = nn.Linear(hidden_sizes[-1], self.output_size, bias=bias)
+        self.output_layer = nn.Linear(hidden_sizes[-1], n_classes, bias=bias)
 
     def forward(self, x):
         x = x.view(-1, self.input_size)
         out = x
         for layer in self.hidden_layers:
             Z = layer(out)
-            out = self.act(Z)
+            out = F.relu(Z)
         logits = self.output_layer(out)
 
         return logits

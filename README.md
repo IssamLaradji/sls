@@ -1,4 +1,4 @@
-## Painless Stochastic Gradient [[paper]](https://arxiv.org/abs/1905.09997)
+## Stochastic Line Search [[paper]](https://arxiv.org/abs/1905.09997)
 
 We propose the optimizer SGD_Armijo, a stochastic line-search method 
 that achieves superior generalization score and convergence speed.
