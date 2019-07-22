@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="issam@dc1-wks-08.elementai.net:1230">
+  <component name="PublishConfigData">
     <serverData>
       <paths name="issam@dc1-wks-08.elementai.net:1230">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/issam/Research_Ground/stochastic_line_search" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/issam/Research_Ground/sls" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
     </serverData>
-    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
