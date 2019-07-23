@@ -3,6 +3,7 @@ import copy
 
 from . import reset_step
 from . import wolfe_line_search
+from .. import optim
 
 class SGD_Armijo(torch.optim.Optimizer):
     def __init__(self,
@@ -54,12 +55,7 @@ class SGD_Armijo(torch.optim.Optimizer):
         params_current = copy.deepcopy(self.params)
         grad_current = [p.grad for p in self.params]
 
-        grad_norm = 0.
-        for g in grad_current:
-            if g is None:
-                continue
-            grad_norm += torch.sum(torch.mul(g, g))
-        grad_norm = torch.sqrt(grad_norm)
+        grad_norm = optim.compute_grad_norm(grad_current)
         # save the gradient at the current parameters
         # grad_current, grad_norm = get_grads(self.params)
 

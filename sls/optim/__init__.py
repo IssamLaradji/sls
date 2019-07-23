@@ -56,7 +56,14 @@ def get_grads(params):
 
     return gradient, torch.sqrt(grad_norm)
 
-
+def compute_grad_norm(grad_list):
+    grad_norm = 0.
+    for g in grad_list:
+        if g is None:
+            continue
+        grad_norm += torch.sum(torch.mul(g, g))
+    grad_norm = torch.sqrt(grad_norm)
+    return grad_norm
 
 
 from . import sgd_armijo
