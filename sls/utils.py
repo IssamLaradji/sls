@@ -36,25 +36,6 @@ def reset_step(step_size, n_batches, beta_2=None, reset_option=1,
 
     return step_size
 
-def get_grads(params):
-    param_groups = params
-
-    grad_norm = 0
-    gradient = []
-
-    if not isinstance(param_groups[0], dict):
-        param_groups = [{'params': param_groups}]
-
-    for i, group in enumerate(param_groups):
-        grad_group = []
-        for j, p in enumerate(group['params']):
-            grad_copy = torch.zeros_like(p.grad.data).copy_(p.grad.data)
-            grad_group.append(grad_copy)
-            grad_norm = grad_norm + torch.sum(torch.mul(grad_copy, grad_copy))
-
-        gradient.append(grad_group)
-
-    return gradient, torch.sqrt(grad_norm)
 
 def compute_grad_norm(grad_list):
     grad_norm = 0.
@@ -66,4 +47,5 @@ def compute_grad_norm(grad_list):
     return grad_norm
 
 
-from . import sgd_armijo
+def get_grad_list(params):
+    return [p.grad for p in params]

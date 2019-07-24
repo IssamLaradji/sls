@@ -12,9 +12,8 @@ python example.py
 It will train MLP with SGD_Armijo on MNIST for 5 epochs.
 
 ### 2. Using SGD_Armijo
-  1. clone repo `git clone git@github.com:IssamLaradji/sls.git`
-  2. copy  the folder`slc/sls` into your project; then
-  3. define your optimizer as something like,
+  1. `pip install --upgrade git+https://github.com/IssamLaradji/sls.git`
+  2. define your optimizer as something like,
   ```
   from sls import optim
   opt = optim.sgd_armijo.SGD_Armijo(model.parameters(),
