@@ -22,8 +22,9 @@ for images, labels in train_loader:
     opt.step(closure)
 ```
 
-### 0. Concerns
+### 0. Things to note
 - The code does not yet work with `dropout`.
+- Make sure the network is overparametrized for the problem.
 
 ### 1. A minimal example
 Run the following command for illustrating the SgdArmijo optimizer,
