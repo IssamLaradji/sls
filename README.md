@@ -1,7 +1,26 @@
 ## SgdArmijo - Stochastic Line Search [[paper]](https://arxiv.org/abs/1905.09997)
 
 We propose the optimizer SgdArmijo, a stochastic line-search method 
-that achieves superior generalization score and convergence speed.
+that achieves superior generalization score and convergence speed. 
+The script below is how it can be used in a training loop.
+
+```
+opt = sls.SgdArmijo(model.parameters(),
+                    n_batches_in_epoch=len(train_loader))
+                       
+for images, labels in train_loader:
+    images, labels = images.cuda(), labels.cuda()
+
+    opt.zero_grad()
+    
+    def closure():
+            probs = F.log_softmax(model(images), dim=1)
+            loss = F.nll_loss(probs, labels, reduction="sum")
+          
+            return loss
+            
+    opt.step(closure)
+```
 
 ### 0. Concerns
 - The code does not yet work with `dropout`.
