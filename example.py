@@ -23,7 +23,7 @@ def main():
     train_loader = DataLoader(train_set, drop_last=True, shuffle=True, batch_size=128)
 
     # Create model
-    model = models.MLP(n_classes=10, dropout=True).cuda()
+    model = models.MLP(n_classes=10, dropout=False).cuda()
 
     # Run Optimizer
     opt = sls.SGD_Armijo(model.parameters(),

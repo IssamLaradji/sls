@@ -20,8 +20,9 @@ class MLP(nn.Module):
         for layer in self.hidden_layers:
             Z = layer(out)
             out = F.relu(Z)
+
             if self.dropout:
-                F.dropout(out, p=0.5)
+                out = F.dropout(out, p=0.5)
 
         logits = self.output_layer(out)
 
