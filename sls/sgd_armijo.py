@@ -3,7 +3,7 @@ import copy
 
 from . import utils as ut
 
-class SGD_Armijo(torch.optim.Optimizer):
+class SgdArmijo(torch.optim.Optimizer):
     def __init__(self,
                  params,
                  n_batches_in_epoch,

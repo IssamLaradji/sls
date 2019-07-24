@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 
 
 def main():
-    print("Dataset: MNIST - Model: MLP - Optimizer: SGD_Armijo")
+    print("Dataset: MNIST - Model: MLP - Optimizer: SgdArmijo")
 
     # Load MNIST
     train_set = torchvision.datasets.MNIST("data", train=True,
@@ -26,7 +26,7 @@ def main():
     model = models.MLP(n_classes=10, dropout=False).cuda()
 
     # Run Optimizer
-    opt = sls.SGD_Armijo(model.parameters(),
+    opt = sls.SgdArmijo(model.parameters(),
                          n_batches_in_epoch=len(train_loader))
 
     result_dict = []

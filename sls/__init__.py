@@ -1,1 +1,1 @@
-from .sgd_armijo import SGD_Armijo
+from .sgd_armijo import SgdArmijo

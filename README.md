@@ -1,36 +1,36 @@
-## SGD_Armijo - Stochastic Line Search [[paper]](https://arxiv.org/abs/1905.09997)
+## SgdArmijo - Stochastic Line Search [[paper]](https://arxiv.org/abs/1905.09997)
 
-We propose the optimizer SGD_Armijo, a stochastic line-search method 
+We propose the optimizer SgdArmijo, a stochastic line-search method 
 that achieves superior generalization score and convergence speed.
 
 ### 0. Concerns
 - The code does not yet work with `dropout`.
 
 ### 1. A minimal example
-Run the following command for illustrating the SGD_Armijo optimizer,
+Run the following command for illustrating the SgdArmijo optimizer,
 ```
 python example.py
 ```
 
-It will train MLP with SGD_Armijo on MNIST for 5 epochs.
+It will train MLP with SgdArmijo on MNIST for 5 epochs.
 
-### 2. Using SGD_Armijo
+### 2. Using SgdArmijo
   1. `pip install --upgrade git+https://github.com/IssamLaradji/sls.git`
   2. define your optimizer as something like,
   ```
   import sls
-  opt = sls.SGD_Armijo(model.parameters(),
+  opt = sls.SgdArmijo(model.parameters(),
                        n_batches_in_epoch=len(train_loader))
   ```
 
 ### 3. How is it different from other torch optimizers?
 
-1) SGD_Armijo needs the number of batches in an epoch. It can be obtained from
+1) SgdArmijo needs the number of batches in an epoch. It can be obtained from
 `train_loader` like this,
     ```
-    sls.SGD_Armijo(model.parameters(), n_batches_in_epoch=len(train_loader))
+    sls.SgdArmijo(model.parameters(), n_batches_in_epoch=len(train_loader))
     ```
-2) SGD_Armijo needs a closure when it makes a step like `opt.step(closure)`. The closure should only compute
+2) SgdArmijo needs a closure when it makes a step like `opt.step(closure)`. The closure should only compute
 and return the loss without calling `loss.backward()`. Here is an example.
 
     - For Adam it is, 
@@ -42,7 +42,7 @@ and return the loss without calling `loss.backward()`. Here is an example.
             return loss
         ```
         
-    - For SGD_Armijo it is, 
+    - For SgdArmijo it is, 
         ```
         def closure():
             probs = F.log_softmax(model(images), dim=1)
