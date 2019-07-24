@@ -3,6 +3,9 @@
 We propose the optimizer SGD_Armijo, a stochastic line-search method 
 that achieves superior generalization score and convergence speed.
 
+### 0. Concerns
+- Please remove `dropout` from the model. The code does not yet work with `dropout`.
+
 ### 1. A minimal example
 Run the following command for illustrating the SGD_Armijo optimizer,
 ```
