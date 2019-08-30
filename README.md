@@ -29,10 +29,15 @@ for images, labels in train_loader:
 ### 1. A minimal example
 Run the following command for illustrating the SgdArmijo optimizer,
 ```
-python example.py
+python example.py -d mnist -m mlp
 ```
 
 It will train MLP with SgdArmijo on MNIST for 5 epochs.
+
+Run `python example.py -d cifar10 -m resnet34`
+
+It will train ResNet34 with SgdArmijo on CIFAR10 for 5 epochs.
+
 
 ### 2. Using SgdArmijo
   1. `pip install --upgrade git+https://github.com/IssamLaradji/sls.git`
