@@ -92,6 +92,7 @@ if __name__ == "__main__":
     
     parser.add_argument("-e", "--max_epoch",  default=3, type=int)
     parser.add_argument("-s", "--savedir_base",  default=".data/")
+    parser.add_argument("-p", "--plot",  default=0, type=int)
     parser.add_argument("-r", "--reset",  default=0, type=int)
     args = parser.parse_args()
 
@@ -115,19 +116,20 @@ if __name__ == "__main__":
         
             # save files
             os.makedirs(savedir, exist_ok=True)
-            ut.save_json(savedir + "/exp_dict.json", exp_dict)
-            print("Saved in %s" % savedir)
 
+            ut.save_json(savedir + "/exp_dict.json", exp_dict)
             ut.save_pkl(savedir + "/score_list.pkl", score_list)
             print("Saved in %s" % savedir)
 
         # plot
-        score_df = pd.DataFrame(score_list)
-        plt.plot(score_df["epoch"], score_df["train_loss"], label=opt)
+        if args.plot:
+            score_df = pd.DataFrame(score_list)
+            plt.plot(score_df["epoch"], score_df["train_loss"], label=opt)
 
     # save plot figure
-    plt.legend()
-    plt.xlabel("Epochs")
-    plt.ylabel("Train Loss")
-    plt.title("%s_%s" % (args.dataset, args.model))
-    plt.savefig(args.savedir_base + "/plot_%s_%s.jpg" % (args.dataset, args.model))
+    if args.plot:
+        plt.legend()
+        plt.xlabel("Epochs")
+        plt.ylabel("Train Loss")
+        plt.title("%s_%s" % (args.dataset, args.model))
+        plt.savefig(args.savedir_base + "/plot_%s_%s.jpg" % (args.dataset, args.model))
