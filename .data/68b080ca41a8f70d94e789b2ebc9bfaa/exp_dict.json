@@ -1,0 +1,6 @@
+{
+    "dataset": "mnist",
+    "max_epoch": 3,
+    "model": "mlp",
+    "opt": "adam"
+}

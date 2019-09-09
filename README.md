@@ -7,12 +7,12 @@ The script below is how it can be used in a training loop.
 ### 1. Quickstart
 Run the following command for illustrating the SgdArmijo optimizer,
 ```
-python example.py -d mnist -m mlp
+python trainval.py -d mnist -m mlp
 ```
 
 It will train MLP with SgdArmijo on MNIST for 5 epochs.
 
-Run `python example.py -d cifar10 -m resnet34`
+Run `python trainval.py -d cifar10 -m resnet34`
 
 It will train ResNet34 with SgdArmijo on CIFAR10 for 5 epochs.
 
