@@ -73,12 +73,9 @@ def trainval(exp_dict):
                 loss.backward()
                 opt.step()
 
-
         print(pd.DataFrame(score_list))
     
-
     return score_list
-
 
 def compute_loss(model, images, labels):
     probs = F.log_softmax(model(images), dim=1)
@@ -86,11 +83,10 @@ def compute_loss(model, images, labels):
 
     return loss
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-o", "--opts", nargs="+",  default=["adam"])
+    parser.add_argument("-o", "--opts", nargs="+",  default=["sgd_armijo", "adam"])
     parser.add_argument("-d", "--dataset", default="mnist")
     parser.add_argument("-m", "--model", default="mlp")
     
@@ -114,15 +110,14 @@ if __name__ == "__main__":
             # load score list
             score_list = ut.load_pkl(savedir + "/score_list.pkl")
         else:
-            # train to get score list
-            os.makedirs(savedir, exist_ok=True)
-            ut.save_json(savedir + "/exp_dict.json", exp_dict)
-            print("Saved in %s" % savedir)
-
             # do trainval
             score_list = trainval(exp_dict=exp_dict)
         
             # save files
+            os.makedirs(savedir, exist_ok=True)
+            ut.save_json(savedir + "/exp_dict.json", exp_dict)
+            print("Saved in %s" % savedir)
+
             ut.save_pkl(savedir + "/score_list.pkl", score_list)
             print("Saved in %s" % savedir)
 
