@@ -2,7 +2,18 @@ import hashlib
 import pickle
 import json
 import os
+import itertools
+import torch
 
+
+def cartesian_exp_group(exp_group_name):
+    exp_list = []
+    exp_list_raw = (dict(zip(exp_group_name.keys(), values))
+                    for values in itertools.product(*exp_group_name.values()))
+
+    for exp_dict in exp_list_raw:
+        exp_list += [exp_dict]
+    return exp_list
 
 def hash_dict(dictionary):
     """Create a hash for a dictionary."""
@@ -40,3 +51,11 @@ def load_json(fname, decode=None):
 def save_json(fname, data):
     with open(fname, "w") as json_file:
         json.dump(data, json_file, indent=4, sort_keys=True)
+
+def torch_save(fname, obj):
+    """"Save data in torch format."""
+    # Define names of temporal files
+    fname_tmp = fname + ".tmp"
+
+    torch.save(obj, fname_tmp)
+    os.rename(fname_tmp, fname)

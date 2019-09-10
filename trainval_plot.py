@@ -20,12 +20,12 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
 
-def trainval(exp_dict, savedir, datadir):
+def trainval(exp_dict):
     pprint.pprint(exp_dict)
 
     # Load Dataset
     train_set = datasets.get_dataset(dataset_name=exp_dict["dataset"], 
-                                     datadir=datadir)
+                                     datadir=".data/")
     train_loader = DataLoader(train_set, drop_last=True, shuffle=True, batch_size=128)
 
     # Load model
@@ -84,8 +84,8 @@ def trainval(exp_dict, savedir, datadir):
         # report and save
         print(pd.DataFrame(score_list))
         ut.save_pkl(savedir + "/score_list.pkl", score_list)
-        ut.torch_save(savedir + "/model_state_dict.pth", model.state_dict())
-        ut.torch_save(savedir + "/opt_state_dict.pth", opt.state_dict())
+        ut.torch_save(savedir + "/model_state_dict.pth")
+        ut.torch_save(savedir + "/opt_state_dict.pth")
     
     return score_list
 
@@ -99,29 +99,32 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-e', '--exp_group_name', default='mnist')
-    
-    parser.add_argument('-sb', '--savedir_base', default= configs.SAVEDIR_PATH + '/experiments/')
-    parser.add_argument('-d', '--datadir', default= configs.SAVEDIR_PATH + '/datasets/')
 
-    parser.add_argument("-r", "--reset",  default=0, type=int)
-   
+    parser.add_argument('-sb', '--savedir_base', default=configs.SAVEDIR_PATH + '/experiments/')
+    parser.add_argument('-p', '--plotdir', default=configs.SAVEDIR_PATH + '/plots/')
     args = parser.parse_args()
 
     exp_list = \
             ut.cartesian_exp_group(
                 configs.EXP_GROUPS[args.exp_group_name])
 
+
     # loop over optimizers
     for exp_dict in exp_list:
         exp_id = ut.hash_dict(exp_dict)
         savedir = args.savedir_base + "/%s/" % exp_id
-        os.makedirs(savedir, exist_ok=True)
 
-         # check if experiment exists
-        if args.reset:
-            if os.path.exists(savedir + "/score_list.pkl"):
-                os.remove(savedir + "/score_list.pkl")
+        # plot
+        if os.path.exists(savedir + "/score_list.pkl"):
+            score_list = ut.load_pkl(savedir + "/score_list.pkl")
+            score_df = pd.DataFrame(score_list)
+            plt.plot(score_df["epoch"], score_df["train_loss"], label=exp_dict["opt"])
 
-        # do trainval
-        trainval(exp_dict=exp_dict, savedir=savedir, datadir=args.datadir)
-        
+    # save plot figure
+    plt.legend()
+    plt.xlabel("Epochs")
+    plt.ylabel("Train Loss")
+    plt.title("%s" % args.exp_group_name)
+
+    os.makedirs(args.plotdir, exist_ok=True)
+    plt.savefig(args.plotdir + "/%s.jpg" % args.exp_group_name)
