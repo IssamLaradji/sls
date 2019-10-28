@@ -1,33 +1,52 @@
-## SGD_Armijo - Stochastic Line Search [[paper]](https://arxiv.org/abs/1905.09997)
+## Sls - Stochastic Line Search [[paper]](https://arxiv.org/abs/1905.09997)
 
-We propose the optimizer SGD_Armijo, a stochastic line-search method 
-that achieves superior generalization score and convergence speed.
+We propose the optimizer Sls, a stochastic line-search method 
+that achieves superior generalization score and convergence speed. 
+The script below is how it can be used in a training loop.
 
-### 1. A minimal example
-Run the following command for illustrating the SGD_Armijo optimizer,
+### 1. Quickstart
+Run the following command for illustrating the Sls optimizer,
 ```
-python example.py
+python trainval.py -e mnist
 ```
 
-It will train MLP with SGD_Armijo on MNIST for 5 epochs.
 
-### 2. Using SGD_Armijo
-  1. Install this package as `pip install --upgrade git+https://github.com/IssamLaradji/sls.git`
+### 2. Using it in your code
+
+```
+opt = sls.Sls(model.parameters())
+                       
+for images, labels in train_loader:
+    images, labels = images.cuda(), labels.cuda()
+
+    opt.zero_grad()
+    
+    def closure():
+            probs = F.log_softmax(model(images), dim=1)
+            loss = F.nll_loss(probs, labels, reduction="sum")
+          
+            return loss
+            
+    opt.step(closure)
+```
+
+
+### 3. Using Sls
+  1. `pip install --upgrade git+https://github.com/IssamLaradji/sls.git`
   2. define your optimizer as something like,
   ```
-  from sls import optim
-  opt = optim.sgd_armijo.SGD_Armijo(model.parameters(),
-                                    n_batches_in_epoch=len(train_loader))
+  import sls
+  opt = sls.Sls(model.parameters())
   ```
 
-### 3. How is it different from other torch optimizers?
+### 4. How is it different from other torch optimizers?
 
-1) SGD_Armijo needs the number of batches in an epoch. It can be obtained from
+1) Sls needs the number of batches in an epoch. It can be obtained from
 `train_loader` like this,
     ```
-    optim.sgd_armijo.SGD_Armijo(model.parameters(), n_batches_in_epoch=len(train_loader))
+    sls.Sls(model.parameters(), n_batches_in_epoch=len(train_loader))
     ```
-2) SGD_Armijo needs a closure when it makes a step like `opt.step(closure)`. The closure should only compute
+2) Sls needs a closure when it makes a step like `opt.step(closure)`. The closure should only compute
 and return the loss without calling `loss.backward()`. Here is an example.
 
     - For Adam it is, 
@@ -39,7 +58,7 @@ and return the loss without calling `loss.backward()`. Here is an example.
             return loss
         ```
         
-    - For SGD_Armijo it is, 
+    - For Sls it is, 
         ```
         def closure():
             probs = F.log_softmax(model(images), dim=1)
@@ -47,5 +66,3 @@ and return the loss without calling `loss.backward()`. Here is an example.
           
             return loss          
         ```
-
-
