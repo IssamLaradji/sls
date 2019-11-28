@@ -57,12 +57,7 @@ def reset_step(step_size, n_batches_per_epoch=None, gamma=None, reset_option=1,
         pass
 
     elif reset_option == 1:
-        # try to increase the step-size up to maximum ETA
-        # step_size = step_size * gamma**(1. / n_batches_per_epoch)
-        
-        step_size = min(step_size * gamma**(1. / n_batches_per_epoch), 10.0)
-        if step_size == 10:
-            print("step_size == 10")
+        step_size = step_size * gamma**(1. / n_batches_per_epoch)
 
     elif reset_option == 2:
         step_size = init_step_size
