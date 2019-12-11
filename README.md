@@ -4,6 +4,12 @@ We propose the optimizer Sls, a stochastic line-search method
 that achieves superior generalization score and convergence speed. 
 The script below is how it can be used in a training loop.
 
+### 0. Highlights
+
+SLS trains ResNet-34 faster and better than Adam on CIFAR100,
+
+![alt text](Slides/sls.jpeg)
+
 ### 1. Quickstart
 Run the following command for illustrating the Sls optimizer,
 ```
