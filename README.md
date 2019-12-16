@@ -50,7 +50,7 @@ for images, labels in train_loader:
 1) Sls needs the number of batches in an epoch. It can be obtained from
 `train_loader` like this,
     ```
-    sls.Sls(model.parameters(), n_batches_in_epoch=len(train_loader))
+    sls.Sls(model.parameters(), n_batches_per_epoch=len(train_loader))
     ```
 2) Sls needs a closure when it makes a step like `opt.step(closure)`. The closure should only compute
 and return the loss without calling `loss.backward()`. Here is an example.
