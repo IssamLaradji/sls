@@ -1,4 +1,4 @@
-## Sls - Stochastic Line Search [[paper]](https://arxiv.org/abs/1905.09997)[[video]](https://www.youtube.com/watch?v=3Jx0tuZ1ERs)
+## Sls - Stochastic Line Search (NeurIPS2019) [[paper]](https://arxiv.org/abs/1905.09997)[[video]](https://www.youtube.com/watch?v=3Jx0tuZ1ERs)
 
 We propose the optimizer Sls, a stochastic line-search method 
 that achieves superior generalization score and convergence speed. 
