@@ -2,12 +2,20 @@
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
+<<<<<<< HEAD
+=======
+mlkit/
+>>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
 *.py[cod]
 *$py.class
 .idea
 # C extensions
 *.so
+<<<<<<< HEAD
 
+=======
+.code-workspace.code-workspace
+>>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
 # Distribution / packaging
 .Python
 build/
@@ -136,4 +144,10 @@ dmypy.json
 *.DS_Store
 
 data/
+<<<<<<< HEAD
 .data/
+=======
+.data/
+
+trainval_borgy.py
+>>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67

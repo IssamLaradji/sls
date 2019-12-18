@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## SgdArmijo - Stochastic Line Search [[paper]](https://arxiv.org/abs/1905.09997)
 
 We propose the optimizer SgdArmijo, a stochastic line-search method 
@@ -21,6 +22,31 @@ It will train ResNet34 with SgdArmijo on CIFAR10 for 5 epochs.
 ```
 opt = sls.SgdArmijo(model.parameters(),
                     n_batches_in_epoch=len(train_loader))
+=======
+## Sls - Stochastic Line Search (NeurIPS2019) [[paper]](https://arxiv.org/abs/1905.09997)[[video]](https://www.youtube.com/watch?v=3Jx0tuZ1ERs)
+
+We propose the optimizer Sls, a stochastic line-search method 
+that achieves superior generalization score and convergence speed. 
+The script below is how it can be used in a training loop.
+
+### 0. Highlights
+
+SLS trains ResNet-34 faster and better than Adam on CIFAR100,
+
+![alt text](Slides/sls.jpeg)
+
+### 1. Quickstart
+Run the following command for illustrating the Sls optimizer,
+```
+python trainval.py -e mnist
+```
+
+
+### 2. Using it in your code
+
+```
+opt = sls.Sls(model.parameters())
+>>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
                        
 for images, labels in train_loader:
     images, labels = images.cuda(), labels.cuda()
@@ -36,16 +62,22 @@ for images, labels in train_loader:
     opt.step(closure)
 ```
 
+<<<<<<< HEAD
 ### 3. Things to note
 - The code does not yet work with `dropout`.
 - Make sure the network is overparametrized for the problem.
 
 
 ### 4. Using SgdArmijo
+=======
+
+### 3. Using Sls
+>>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
   1. `pip install --upgrade git+https://github.com/IssamLaradji/sls.git`
   2. define your optimizer as something like,
   ```
   import sls
+<<<<<<< HEAD
   opt = sls.SgdArmijo(model.parameters(),
                        n_batches_in_epoch=len(train_loader))
   ```
@@ -58,6 +90,19 @@ for images, labels in train_loader:
     sls.SgdArmijo(model.parameters(), n_batches_in_epoch=len(train_loader))
     ```
 2) SgdArmijo needs a closure when it makes a step like `opt.step(closure)`. The closure should only compute
+=======
+  opt = sls.Sls(model.parameters())
+  ```
+
+### 4. How is it different from other torch optimizers?
+
+1) Sls needs the number of batches in an epoch. It can be obtained from
+`train_loader` like this,
+    ```
+    sls.Sls(model.parameters(), n_batches_per_epoch=len(train_loader))
+    ```
+2) Sls needs a closure when it makes a step like `opt.step(closure)`. The closure should only compute
+>>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
 and return the loss without calling `loss.backward()`. Here is an example.
 
     - For Adam it is, 
@@ -69,7 +114,11 @@ and return the loss without calling `loss.backward()`. Here is an example.
             return loss
         ```
         
+<<<<<<< HEAD
     - For SgdArmijo it is, 
+=======
+    - For Sls it is, 
+>>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
         ```
         def closure():
             probs = F.log_softmax(model(images), dim=1)
@@ -77,5 +126,3 @@ and return the loss without calling `loss.backward()`. Here is an example.
           
             return loss          
         ```
-
-
