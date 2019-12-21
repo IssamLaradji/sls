@@ -78,7 +78,7 @@ EXP_GROUPS = {
             "max_epoch":[200],
             "runs":run_list},
 
-"mnist":{"dataset":["mnist"],
+        "mnist":{"dataset":["mnist"],
             "model":["mlp"],
             "loss_func": ["softmax_loss"],
             "opt":["sgd_armijo"],

@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-from torch import nn
-from torch.nn import functional as F
-
-def get_model(model_name):
-    if model_name == "mlp":
-        model = Mlp(n_classes=10, dropout=False)
-=======
 import torch
 
 from torch import nn
@@ -22,7 +14,6 @@ def get_model(model_name, train_set=None):
     
     if model_name == "mlp_dropout":
         model = Mlp(n_classes=10, dropout=True)
->>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
 
     elif model_name == "resnet34":
         model = ResNet([3, 4, 6, 3], num_classes=10)
@@ -30,11 +21,6 @@ def get_model(model_name, train_set=None):
     elif model_name == "resnet34_100":
         model = ResNet([3, 4, 6, 3], num_classes=100)
 
-<<<<<<< HEAD
-    return model
-
-# =====================================================
-=======
     elif model_name == "densenet121":
         model = DenseNet121(num_classes=10)
 
@@ -108,7 +94,6 @@ class LinearRegression(torch.nn.Module):
         return outputs
 
 # =====================================================
->>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
 # MLP
 class Mlp(nn.Module):
     def __init__(self, input_size=784,
@@ -244,9 +229,6 @@ class Bottleneck(nn.Module):
         out = self.bn3(self.conv3(out))
         out += self.shortcut(x)
         out = F.relu(out)
-<<<<<<< HEAD
-        return out
-=======
         return out
 
 
@@ -347,4 +329,3 @@ def test():
     x = torch.randn(1,3,32,32)
     y = net(x)
     print(y)
->>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
