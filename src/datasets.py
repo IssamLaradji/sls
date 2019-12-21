@@ -1,13 +1,4 @@
 import torchvision
-<<<<<<< HEAD
-
-from torchvision import transforms
-
-
-def get_dataset(dataset_name, datadir):
-    if dataset_name == "mnist":
-        dataset = torchvision.datasets.MNIST(datadir, train=True,
-=======
 from sklearn.model_selection import train_test_split
 from torchvision import transforms
 import torch
@@ -18,7 +9,6 @@ from src import utils as ut
 def get_dataset(dataset_name, train_flag, datadir, exp_dict):
     if dataset_name == "mnist":
         dataset = torchvision.datasets.MNIST(datadir, train=train_flag,
->>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
                                download=True,
                                transform=torchvision.transforms.Compose([
                                    torchvision.transforms.ToTensor(),
@@ -37,11 +27,7 @@ def get_dataset(dataset_name, train_flag, datadir, exp_dict):
 
         dataset = torchvision.datasets.CIFAR10(
             root=datadir,
-<<<<<<< HEAD
-            train=True,
-=======
             train=train_flag,
->>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
             download=True,
             transform=transform_function)
 
@@ -56,13 +42,6 @@ def get_dataset(dataset_name, train_flag, datadir, exp_dict):
 
         dataset = torchvision.datasets.CIFAR100(
             root=datadir,
-<<<<<<< HEAD
-            train=True,
-            download=True,
-            transform=transform_function)
-
-    return dataset
-=======
             train=train_flag,
             download=True,
             transform=transform_function)
@@ -305,4 +284,3 @@ def rbf_kernel(A, B, sigma):
     distsq = np.square(metrics.pairwise.pairwise_distances(A, B, metric="euclidean"))
     K = np.exp(-1 * distsq/(2*sigma**2))
     return K
->>>>>>> 88b9e8dd238f7e125e67430c5f9e96533a878d67
