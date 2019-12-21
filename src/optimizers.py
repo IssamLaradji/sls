@@ -88,4 +88,3 @@ def get_optimizer(opt, params, n_batches_per_epoch=None):
         raise ValueError("opt %s does not exist..." % opt_name)
 
     return opt
-
