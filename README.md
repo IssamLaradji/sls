@@ -2,19 +2,25 @@
 
 Train faster and better with the SLS optimizer. The following 3 steps are there for getting started.
 
-1. `pip install --upgrade git+https://github.com/IssamLaradji/sls.git`
-2. Define your optimizer as something like,
-  ```
-  import sls
-  opt = sls.Sls(model.parameters())
-  # or as follows for better line search
-  # opt = sls.Sls(model.parameters(), n_batches_per_epoch=len(train_loader))
-  ```
 
-3. Update your model as follows,
+1. Install the optimizer,
+    ```
+    pip install --upgrade git+https://github.com/IssamLaradji/sls.git
+    ```
 
-   ```
-   for images, labels in train_loader:
+
+2. Define the SLS optimizer,
+    ```
+    import sls
+    opt = sls.Sls(model.parameters())
+
+    # Alternative: the following results in better line search
+    opt = sls.Sls(model.parameters(), n_batches_per_epoch=len(train_loader))
+    ```
+
+3. Update the model parameters,
+    ```
+    for images, labels in train_loader:
         images, labels = images.cuda(), labels.cuda()
 
         opt.zero_grad()
