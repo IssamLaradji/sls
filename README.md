@@ -8,7 +8,7 @@ The script below is how it can be used in a training loop.
 
 SLS trains ResNet-34 faster and better than Adam on CIFAR100,
 
-![alt text](Slides/sls.jpeg)
+![alt text](results/sls.jpeg)
 
 ### 1. Quickstart
 Run the following command for illustrating the Sls optimizer,
