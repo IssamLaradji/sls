@@ -81,7 +81,7 @@ EXP_GROUPS = {
         "mnist":{"dataset":["mnist"],
             "model":["mlp"],
             "loss_func": ["softmax_loss"],
-            "opt":["sgd_armijo"],
+            "opt":[{"name":"adam"}, {"name":"sgd_armijo", "gamma":2}],
             "acc_func":["softmax_accuracy"],
             "batch_size":[128],
             "max_epoch":[200],
@@ -165,8 +165,3 @@ EXP_GROUPS = {
             }
 
 EXP_GROUPS = {k:cartesian_exp_group(v) for k,v in EXP_GROUPS.items()}
-
-SAVEDIR_PATH = '/mnt/datasets/public/issam/prototypes/sls'
-
-if not os.path.exists(SAVEDIR_PATH):
-    SAVEDIR_PATH = "data/"

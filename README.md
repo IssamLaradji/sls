@@ -36,22 +36,23 @@ Train faster and better with the SLS optimizer. The following 3 steps are there 
     ```
   
   
-### Experiments
+## Experiments
 
-## CIFAR100
+### CIFAR100
 
-- Run `python trainval.py -e cifar100 -sb <SAVEDIR_BASE>`
-  - `<SAVEDIR_BASE>` is the directory where the experiments are saved.
-- View the results by running `python view_plots.py -e cifar100 -sb <SAVEDIR_BASE>`. This saves the following plot,
+- Run `python trainval.py -e cifar100 -sb <SAVEDIR_BASE> -d <DATADIR>`
+  - `<SAVEDIR_BASE>` is the directory where the experiments are saved. 
+  - `<DATADIR>` is the directory where the dataset is saved.
+- View the results by running `python view_plots.py -e cifar100 -sb <SAVEDIR_BASE>`. It will save a plot as `results/cifar100.jpg`, which looks like the following,
 
 
 ![alt text](results/cifar100.jpeg)
 
-## MNIST
+### MNIST
 
 - Run `python trainval.py -e mnist -sb <SAVEDIR_BASE>`
   - `<SAVEDIR_BASE>` is the directory where the experiments are saved.
-- View the results by running `python view_plots.py -e mnist -sb <SAVEDIR_BASE>`.
+- View the results by running `python view_plots.py -e mnist -sb <SAVEDIR_BASE>`. It will save a plot as `results/mnist.jpg`
 
 
 <!-- ![alt text](results/mnist.jpeg) -->

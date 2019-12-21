@@ -139,8 +139,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-e', '--exp_group_list', nargs="+")
-    parser.add_argument('-sb', '--savedir_base', default= exp_configs.SAVEDIR_PATH)
-    parser.add_argument('-d', '--datadir', default= exp_configs.SAVEDIR_PATH)
+    parser.add_argument('-sb', '--savedir_base', required=True)
+    parser.add_argument('-d', '--datadir', required=True)
     parser.add_argument("-r", "--reset",  default=0, type=int)
     parser.add_argument("-ei", "--exp_id", default=None)
     parser.add_argument("-mf", "--metrics_flag", default=1, type=int)
