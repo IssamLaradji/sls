@@ -4,7 +4,7 @@ Train faster and better with the SLS optimizer. The following 3 steps are there 
 
 
 1. Install the optimizer,
-    ```python
+    ```bash
     pip install --upgrade git+https://github.com/IssamLaradji/sls.git
     ```
 
