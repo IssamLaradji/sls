@@ -4,13 +4,13 @@ Train faster and better with the SLS optimizer. The following 3 steps are there 
 
 
 1. Install the optimizer,
-    ```
+    ```bash
     pip install --upgrade git+https://github.com/IssamLaradji/sls.git
     ```
 
 
 2. Define the SLS optimizer,
-    ```
+    ```python
     import sls
     opt = sls.Sls(model.parameters())
 
@@ -19,7 +19,7 @@ Train faster and better with the SLS optimizer. The following 3 steps are there 
     ```
 
 3. Update the model parameters,
-    ```
+    ```python
     for images, labels in train_loader:
         images, labels = images.cuda(), labels.cuda()
 
