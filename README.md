@@ -46,7 +46,7 @@ Train faster and better with the SLS optimizer. The following 3 steps are there 
 - View the results by running `python view_plots.py -e cifar100 -sb <SAVEDIR_BASE>`. It will save a plot as `results/cifar100.jpg`, which looks like the following,
 
 
-![alt text](results/cifar100.jpeg)
+![alt text](results/cifar100.jpg)
 
 ### MNIST
 

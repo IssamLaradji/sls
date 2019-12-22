@@ -38,6 +38,25 @@ opt_list_sgd = [{"name":"sgd", "lr":lr} for lr in [1e-1,1e-2,1e-3,1e-4]]
 run_list = [0,1,2,3,4]
 
 EXP_GROUPS = {
+        "mnist":{"dataset":["mnist"],
+            "model":["mlp"],
+            "loss_func": ["softmax_loss"],
+            "opt":[{"name":"sgd_armijo", "gamma":2}, {"name":"adam"}, ],
+            "acc_func":["softmax_accuracy"],
+            "batch_size":[128],
+            "max_epoch":[200],
+            "runs":[0]},
+        
+        "cifar100":{"dataset":["cifar100"],
+            "model":["resnet34_100"],
+            "loss_func": ["softmax_loss"],
+            "opt":[{"name":"adam"}, {"name":"sgd_armijo", "gamma":2}],
+            "acc_func":["softmax_accuracy"],
+            "batch_size":[128],
+            "max_epoch":[200],
+            "runs":[0]},
+        
+        
     # matrix factorization
     "figure2":{"dataset":["matrix_fac"],
             "model":["matrix_fac_1", "matrix_fac_4", "matrix_fac_10", "linear_fac"],
@@ -78,15 +97,6 @@ EXP_GROUPS = {
             "max_epoch":[200],
             "runs":run_list},
 
-        "mnist":{"dataset":["mnist"],
-            "model":["mlp"],
-            "loss_func": ["softmax_loss"],
-            "opt":[{"name":"adam"}, {"name":"sgd_armijo", "gamma":2}],
-            "acc_func":["softmax_accuracy"],
-            "batch_size":[128],
-            "max_epoch":[200],
-            "runs":[0]},
-        
         "polyak":{"dataset":["cifar10"],
             "model":["resnet34", "densenet121"],
             "loss_func": ["softmax_loss"],
