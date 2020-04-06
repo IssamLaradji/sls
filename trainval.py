@@ -1,39 +1,48 @@
-import sls
-import torch
-import torchvision
-import tqdm
-import pandas as pd
-import pprint
-import itertools
 import os
-import pylab as plt
-import exp_configs
-import time
-import numpy as np
-
-from src import models
-from src import datasets
-from src import optimizers
-from src import utils as ut
-from src import metrics
-
 import argparse
+import torchvision
+import pandas as pd
+import torch 
+import numpy as np
+import time
+import pprint
+import tqdm
+import exp_configs
+from src import datasets, models, optimizers, metrics
 
-from torch.backends import cudnn
-from torch.nn import functional as F
-from torch.utils.data import DataLoader
-from torch.utils.data.sampler import RandomSampler
-
-cudnn.benchmark = True
+from haven import haven_utils as hu
+from haven import haven_results as hr
+from haven import haven_chk as hc
+from haven import haven_jupyter as hj
 
 
-def trainval(exp_dict, savedir, datadir, metrics_flag=True):
-    # Set seed
-    np.random.seed(42)
-    torch.manual_seed(42)
-    torch.cuda.manual_seed_all(42)
+def trainval(exp_dict, savedir_base, datadir, reset=False, metrics_flag=True):
+    # bookkeeping
+    # ---------------
+
+    # get experiment directory
+    exp_id = hu.hash_dict(exp_dict)
+    savedir = os.path.join(savedir_base, exp_id)
+
+    if reset:
+        # delete and backup experiment
+        hc.delete_experiment(savedir, backup_flag=True)
     
+    # create folder and save the experiment dictionary
+    os.makedirs(savedir, exist_ok=True)
+    hu.save_json(os.path.join(savedir, 'exp_dict.json'), exp_dict)
     pprint.pprint(exp_dict)
+    print('Experiment saved in %s' % savedir)
+    
+    # set seed
+    # ---------------
+    seed = 42 + exp_dict['runs']
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+    # Dataset
+    # -----------
 
     # Load Train Dataset
     train_set = datasets.get_dataset(dataset_name=exp_dict["dataset"],
@@ -41,7 +50,7 @@ def trainval(exp_dict, savedir, datadir, metrics_flag=True):
                                      datadir=datadir,
                                      exp_dict=exp_dict)
 
-    train_loader = DataLoader(train_set,
+    train_loader = torch.utils.data.DataLoader(train_set,
                               drop_last=True,
                               shuffle=True,
                               batch_size=exp_dict["batch_size"])
@@ -52,10 +61,11 @@ def trainval(exp_dict, savedir, datadir, metrics_flag=True):
                                    datadir=datadir,
                                    exp_dict=exp_dict)
 
-    # Load model
+
+    # Model
+    # -----------
     model = models.get_model(exp_dict["model"],
                              train_set=train_set).cuda()
-
     # Choose loss and metric function
     loss_function = metrics.get_metric_function(exp_dict["loss_func"])
 
@@ -65,23 +75,32 @@ def trainval(exp_dict, savedir, datadir, metrics_flag=True):
                                    params=model.parameters(),
                                    n_batches_per_epoch =n_batches_per_epoch)
 
-    # Resume from last saved state_dict
-    if (not os.path.exists(savedir + "/run_dict.pkl") or
-        not os.path.exists(savedir + "/score_list.pkl")):
-        ut.save_pkl(savedir + "/run_dict.pkl", {"running":1})
+    # Checkpoint
+    # -----------
+    model_path = os.path.join(savedir, 'model.pth')
+    score_list_path = os.path.join(savedir, 'score_list.pkl')
+    opt_path = os.path.join(savedir, 'opt_state_dict.pth')
+
+    if os.path.exists(score_list_path):
+        # resume experiment
+        score_list = hu.load_pkl(score_list_path)
+        model.load_state_dict(torch.load(model_path))
+        opt.load_state_dict(torch.load(opt_path))
+        s_epoch = score_list[-1]['epoch'] + 1
+    else:
+        # restart experiment
         score_list = []
         s_epoch = 0
-    else:
-        score_list = ut.load_pkl(savedir + "/score_list.pkl")
-        model.load_state_dict(torch.load(savedir + "/model_state_dict.pth"))
-        opt.load_state_dict(torch.load(savedir + "/opt_state_dict.pth"))
-        s_epoch = score_list[-1]["epoch"] + 1
 
-    for epoch in range(s_epoch, exp_dict["max_epoch"]):
+    # Train & Val
+    # ------------
+    print('Starting experiment at epoch %d/%d' % (s_epoch, exp_dict['max_epoch']))
+
+    for epoch in range(s_epoch, exp_dict['max_epoch']):
         # Set seed
-        np.random.seed(epoch)
-        torch.manual_seed(epoch)
-        torch.cuda.manual_seed_all(epoch)
+        np.random.seed(exp_dict['runs']+epoch)
+        torch.manual_seed(exp_dict['runs']+epoch)
+        torch.cuda.manual_seed_all(exp_dict['runs']+epoch)
 
         score_dict = {"epoch": epoch}
 
@@ -115,59 +134,58 @@ def trainval(exp_dict, savedir, datadir, metrics_flag=True):
 
         e_time = time.time()
 
-        # Record step size and batch size
+        # Record metrics
         score_dict["step_size"] = opt.state["step_size"]
         score_dict["n_forwards"] = opt.state["n_forwards"]
         score_dict["n_backwards"] = opt.state["n_backwards"]
         score_dict["batch_size"] =  train_loader.batch_size
         score_dict["train_epoch_time"] = e_time - s_time
 
-        # Add score_dict to score_list
         score_list += [score_dict]
 
         # Report and save
         print(pd.DataFrame(score_list).tail())
-        ut.save_pkl(savedir + "/score_list.pkl", score_list)
-        ut.torch_save(savedir + "/model_state_dict.pth", model.state_dict())
-        ut.torch_save(savedir + "/opt_state_dict.pth", opt.state_dict())
+        hu.save_pkl(score_list_path, score_list)
+        hu.torch_save(model_path, model.state_dict())
+        hu.torch_save(opt_path, opt.state_dict())
         print("Saved: %s" % savedir)
 
-    return score_list
+    print('Experiment completed')
 
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-e', '--exp_group_list', nargs="+")
+    parser.add_argument('-e', '--exp_group_list', nargs='+')
     parser.add_argument('-sb', '--savedir_base', required=True)
     parser.add_argument('-d', '--datadir', required=True)
-    parser.add_argument("-r", "--reset",  default=0, type=int)
-    parser.add_argument("-ei", "--exp_id", default=None)
-    parser.add_argument("-mf", "--metrics_flag", default=1, type=int)
+    parser.add_argument('-r', '--reset',  default=0, type=int)
+    parser.add_argument('-ei', '--exp_id', default=None)
 
     args = parser.parse_args()
-    exp_list = []
-    for exp_group_name in args.exp_group_list:
-        exp_list += exp_configs.EXP_GROUPS[exp_group_name]
 
-    # loop over experiments
+    # Collect experiments
+    # -------------------
+    if args.exp_id is not None:
+        # select one experiment
+        savedir = os.path.join(args.savedir_base, args.exp_id)
+        exp_dict = hu.load_json(os.path.join(savedir, 'exp_dict.json'))        
+        
+        exp_list = [exp_dict]
+        
+    else:
+        # select exp group
+        exp_list = []
+        for exp_group_name in args.exp_group_list:
+            exp_list += exp_configs.EXP_GROUPS[exp_group_name]
+
+
+    # Run experiments
+    # ----------------------------
     for exp_dict in exp_list:
-        exp_id = ut.hash_dict(exp_dict)
-
-        if args.exp_id is not None and args.exp_id != exp_id:
-            continue
-
-        savedir = args.savedir_base + "/%s/" % exp_id
-        os.makedirs(savedir, exist_ok=True)
-        ut.save_json(savedir+"/exp_dict.json", exp_dict)
-
-        # check if experiment exists
-        if args.reset:
-            if os.path.exists(savedir + "/score_list.pkl"):
-                os.remove(savedir + "/score_list.pkl")
-            if os.path.exists(savedir + "/run_dict.pkl"):
-                os.remove(savedir + "/run_dict.pkl")
-
         # do trainval
-        trainval(exp_dict=exp_dict, savedir=savedir, datadir=args.datadir,
-                    metrics_flag=args.metrics_flag)
+        trainval(exp_dict=exp_dict,
+                savedir_base=args.savedir_base,
+                datadir=args.datadir,
+                reset=args.reset)

@@ -1,6 +1,6 @@
 import numpy as np
-import sls
-import others
+from . import sls
+from . import others
 
 import torch
 

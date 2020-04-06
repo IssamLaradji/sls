@@ -2,58 +2,26 @@
 
 Train faster and better with the SLS optimizer. The following 3 steps are there for getting started.
 
+### 1. Install requirements
 
-1. Install the optimizer,
-    ```bash
-    pip install --upgrade git+https://github.com/IssamLaradji/sls.git
-    ```
+`pip install -r requirements.txt`
 
+### 2. Mnist experiment
 
-2. Define the SLS optimizer,
-    ```python
-    import sls
-    opt = sls.Sls(model.parameters())
+`python trainval.py -e mnist -sb ../results -d ../data -r 1`
 
-    # Alternative: the following results in better line search
-    opt = sls.Sls(model.parameters(), n_batches_per_epoch=len(train_loader))
-    ```
+where `-e` is the experiment group, `-sb` is the result directory, and `-d` is the dataset directory.
 
-3. Update the model parameters,
-    ```python
-    for images, labels in train_loader:
-        images, labels = images.cuda(), labels.cuda()
+### 3. Cifar100 experiment
 
-        opt.zero_grad()
-        
-        # this closure is necessary for performing line search
-        def closure():
-            probs = F.log_softmax(model(images), dim=1)
-            loss = F.nll_loss(probs, labels, reduction="sum")
-          
-            return loss
-            
-    opt.step(closure)
-    ```
-  
-  
-## Experiments
-
-### CIFAR100
-
-- Run `python trainval.py -e cifar100 -sb <SAVEDIR_BASE> -d <DATADIR>`
-  - `<SAVEDIR_BASE>` is the directory where the experiments are saved. 
-  - `<DATADIR>` is the directory where the dataset is saved.
-- View the results by running `python view_plots.py -e cifar100 -sb <SAVEDIR_BASE>`. It will save a plot as `results/cifar100.jpg`, which looks like the following,
+`python trainval.py -e cifar100 -sb ../results -d ../data -r 1`
 
 
-![alt text](results/cifar100.jpg)
+#### Visualize
 
-### MNIST
+To view the results, create the jupyter file as follows and run its cells,
+```
+python create_jupyter.py
+```
 
-- Run `python trainval.py -e mnist -sb <SAVEDIR_BASE>`
-  - `<SAVEDIR_BASE>` is the directory where the experiments are saved.
-- View the results by running `python view_plots.py -e mnist -sb <SAVEDIR_BASE>`. It will save a plot as `results/mnist.jpg`
-
-
-<!-- ![alt text](results/mnist.jpeg) -->
-
+![alt text](neurips2019/cifar100.jpg)

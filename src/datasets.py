@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from torchvision import transforms
 import torch
 from sklearn import metrics
-from src import utils as ut
+from haven import haven_utils as hu
 
 
 def get_dataset(dataset_name, train_flag, datadir, exp_dict):
@@ -69,10 +69,10 @@ def get_dataset(dataset_name, train_flag, datadir, exp_dict):
             # fname_rbf = "%s/rbf_%s_train.pkl" % (datadir, dataset_name)
 
             # if os.path.exists(fname_rbf):
-            #     k_train_X = ut.load_pkl(fname_rbf)
+            #     k_train_X = hu.load_pkl(fname_rbf)
             # else:
             k_train_X = rbf_kernel(X_train, X_train, sigma_dict[dataset_name])
-                # ut.save_pkl(fname_rbf, k_train_X)
+                # hu.save_pkl(fname_rbf, k_train_X)
 
             X_train = k_train_X
             X_train = torch.FloatTensor(X_train)
@@ -83,10 +83,10 @@ def get_dataset(dataset_name, train_flag, datadir, exp_dict):
         else:
             # fname_rbf = "%s/rbf_%s_test.pkl" % (datadir, dataset_name)
             # if os.path.exists(fname_rbf):
-            #     k_test_X = ut.load_pkl(fname_rbf)
+            #     k_test_X = hu.load_pkl(fname_rbf)
             # else:
             k_test_X = rbf_kernel(X_test, X_train, sigma_dict[dataset_name])
-                # ut.save_pkl(fname_rbf, k_test_X)
+                # hu.save_pkl(fname_rbf, k_test_X)
 
             X_test = k_test_X
             X_test = torch.FloatTensor(X_test)
@@ -127,9 +127,9 @@ def get_dataset(dataset_name, train_flag, datadir, exp_dict):
         fname = datadir + 'matrix_fac.pkl'
         if not os.path.exists(fname):
             data = generate_synthetic_matrix_factorization_data()
-            ut.save_pkl(fname, data)
+            hu.save_pkl(fname, data)
 
-        A, y = ut.load_pkl(fname)
+        A, y = hu.load_pkl(fname)
 
         X_train, X_test, y_train, y_test = train_test_split(A, y, test_size=0.2, random_state=9513451)
 

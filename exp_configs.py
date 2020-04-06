@@ -1,15 +1,7 @@
 import os
 import itertools
 
-def cartesian_exp_group(exp_group_name):
-    exp_list = []
-    exp_list_raw = (dict(zip(exp_group_name.keys(), values))
-                    for values in itertools.product(*exp_group_name.values()))
-
-    for exp_dict in exp_list_raw:
-        exp_list += [exp_dict]
-
-    return exp_list
+from haven import haven_utils as hu
 
 ours_opt_list =  [
         "sgd_armijo",
@@ -174,4 +166,4 @@ EXP_GROUPS = {
 
             }
 
-EXP_GROUPS = {k:cartesian_exp_group(v) for k,v in EXP_GROUPS.items()}
+EXP_GROUPS = {k:hu.cartesian_exp_group(v) for k,v in EXP_GROUPS.items()}
