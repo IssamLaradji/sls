@@ -29,6 +29,7 @@ python create_jupyter.py
 
 #### Citation
 
+```
 @inproceedings{vaswani2019painless,
   title={Painless stochastic gradient: Interpolation, line-search, and convergence rates},
   author={Vaswani, Sharan and Mishkin, Aaron and Laradji, Issam and Schmidt, Mark and Gidel, Gauthier and Lacoste-Julien, Simon},
@@ -36,3 +37,4 @@ python create_jupyter.py
   pages={3727--3740},
   year={2019}
 }
+```
