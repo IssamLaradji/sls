@@ -6,6 +6,8 @@ Train faster and better with the SLS optimizer. The following 3 steps are there 
 
 `pip install -r requirements.txt`
 
+This command installs the [Haven library](https://github.com/ElementAI/haven) which helps in managing the experiments.
+
 ### 2. Mnist experiment
 
 `python trainval.py -e mnist -sb ../results -d ../data -r 1`
@@ -38,3 +40,4 @@ python create_jupyter.py
   year={2019}
 }
 ```
+It is a collaborative work between labs at MILA, Element AI, and UBC.
