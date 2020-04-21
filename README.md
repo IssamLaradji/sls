@@ -19,7 +19,7 @@ where `-e` is the experiment group, `-sb` is the result directory, and `-d` is t
 
 `python trainval.py -e cifar100 -sb ../results -d ../data -r 1`
 
-### 3. Visualize
+### 3. Results
 #### 3.1 Launch Jupyter by running the following on terminal,
 
 ```
