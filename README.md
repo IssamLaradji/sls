@@ -19,12 +19,41 @@ where `-e` is the experiment group, `-sb` is the result directory, and `-d` is t
 `python trainval.py -e cifar100 -sb ../results -d ../data -r 1`
 
 
-#### Visualize
 
-To view the results, create the jupyter file as follows and run its cells,
+### 5. Visualize
+#### 5.1 Launch Jupyter by running the following on terminal,
+
 ```
-python create_jupyter.py
+jupyter nbextension enable --py widgetsnbextension --sys-prefix
+jupyter notebook
 ```
+
+#### 5.2 On a Jupyter cell, run the following script,
+```python
+from haven import haven_jupyter as hj
+from haven import haven_results as hr
+from haven import haven_utils as hu
+
+# path to where the experiments got saved
+savedir_base = '../results'
+
+# filter exps
+filterby_list = [{'dataset':'cifar100', 'opt':{'c':0.5}}, 
+                 {'dataset':'cifar100', 'opt':{'name':'adam'}}]
+
+
+legend_list = ['opt.name']
+title_list = ['dataset', 'model']
+y_metrics = ['train_loss', 'val_acc']
+
+# get experiments
+rm = hr.ResultManager(savedir_base=savedir_base, 
+                      filterby_list=filterby_list, 
+                      verbose=0)
+# launch dashboard
+hj.get_dashboard(rm, vars(), wide_display=True)
+```
+
 
 ![alt text](neurips2019/cifar100.jpg)
 
