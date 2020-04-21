@@ -8,27 +8,26 @@ Train faster and better with the SLS optimizer. The following 3 steps are there 
 
 This command installs the [Haven library](https://github.com/ElementAI/haven) which helps in managing the experiments.
 
-### 2. Mnist experiment
+### 2. Experiments
 
+#### 2.1 MNIST
 `python trainval.py -e mnist -sb ../results -d ../data -r 1`
 
 where `-e` is the experiment group, `-sb` is the result directory, and `-d` is the dataset directory.
 
-### 3. Cifar100 experiment
+#### 2.2 Cifar100 experiment
 
 `python trainval.py -e cifar100 -sb ../results -d ../data -r 1`
 
-
-
-### 5. Visualize
-#### 5.1 Launch Jupyter by running the following on terminal,
+### 3. Visualize
+#### 3.1 Launch Jupyter by running the following on terminal,
 
 ```
 jupyter nbextension enable --py widgetsnbextension --sys-prefix
 jupyter notebook
 ```
 
-#### 5.2 On a Jupyter cell, run the following script,
+#### 3.2 On a Jupyter cell, run the following script,
 ```python
 from haven import haven_jupyter as hj
 from haven import haven_results as hr
