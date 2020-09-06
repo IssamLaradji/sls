@@ -6,7 +6,7 @@ Train faster and better with the SLS optimizer. The following 3 steps are there 
 
 `pip install -r requirements.txt`
 
-This command installs the [Haven library](https://github.com/ElementAI/haven) which helps in managing the experiments.
+This command installs the [Haven library](https://github.com/IssamLaradji/haven) which helps in managing the experiments.
 
 ### 2. Experiments
 
