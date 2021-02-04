@@ -98,7 +98,10 @@ def random_seed_torch(seed, device=0):
 
     np.random.seed(seed)
     torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
+    try:
+      torch.cuda.manual_seed_all(seed)
+    except:
+      pass
 
     try:
         yield
