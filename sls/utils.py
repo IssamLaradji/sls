@@ -94,17 +94,17 @@ def random_seed(seed):
 @contextlib.contextmanager
 def random_seed_torch(seed, device=0):
     cpu_rng_state = torch.get_rng_state()
-    gpu_rng_state = torch.cuda.get_rng_state(0)
+    if torch.cuda.is_available():
+        gpu_rng_state = torch.cuda.get_rng_state(0)
 
     np.random.seed(seed)
     torch.manual_seed(seed)
-    try:
-      torch.cuda.manual_seed_all(seed)
-    except:
-      pass
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
 
     try:
         yield
     finally:
         torch.set_rng_state(cpu_rng_state)
-        torch.cuda.set_rng_state(gpu_rng_state, device)
+        if torch.cuda.is_available():
+            torch.cuda.set_rng_state(gpu_rng_state, device)
