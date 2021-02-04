@@ -2,13 +2,28 @@
 
 Train faster and better with the SLS optimizer. The following 3 steps are there for getting started.
 
-### 1. Install requirements
+### 1. Installation
+`pip install git+https://github.com/IssamLaradji/sls.git`
 
-`pip install -r requirements.txt`
+### 2. Usage
+Use `Sls` in your code by adding the following script.
 
-This command installs the [Haven library](https://github.com/haven-ai/haven-ai) which helps in managing the experiments.
+```python
+import sls
+opt = sls.Sls(model.parameters())
 
-### 2. Experiments
+for epoch in range(100):
+      # create loss closure
+      closure = lambda : torch.nn.MSELoss()(model(X), y)
+
+      # update parameters
+      opt.zero_grad()
+      loss = opt.step(closure=closure)
+```
+
+### 3. Experiments
+
+Install the experiment requirements `pip install -r requirements.txt`
 
 #### 2.1 MNIST
 `python trainval.py -e mnist -sb ../results -d ../data -r 1`
