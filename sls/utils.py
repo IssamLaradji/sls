@@ -1,5 +1,4 @@
 import torch
-import torch.cuda
 
 import numpy as np
 import contextlib
