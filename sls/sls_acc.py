@@ -144,7 +144,7 @@ def polyak_update(params_model, params_current, grad_current, params_old, moment
         if g_current is None:
             continue
 
-        p_model.data = p_model.data + momentum * (p_current - p_old.cuda())
+        p_model.data = p_model.data + momentum * (p_current - p_old.to(p_model.data.device))
 
 def nesterov_update(params_model, grad_current, y_params_old, gamma):
     zipped = zip(params_model, grad_current, y_params_old)
@@ -153,4 +153,4 @@ def nesterov_update(params_model, grad_current, y_params_old, gamma):
         if g_current is None:
             continue
 
-        p_model.data = (1-gamma) * p_model.data + gamma * y_old.cuda()
+        p_model.data = (1-gamma) * p_model.data + gamma * y_old.to(p_model.data.device)
